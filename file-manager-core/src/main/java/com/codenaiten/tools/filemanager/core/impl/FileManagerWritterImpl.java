@@ -9,6 +9,8 @@ import com.codenaiten.tools.filemanager.core.properties.FileManagerProperties;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -78,8 +80,10 @@ public class FileManagerWritterImpl implements FileManagerWritter {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     private FileInfo writeHandler( final File file, final byte[] content ) throws IOException {
-        //TODO: Implement writeHandler( File file, byte[] content )
-        throw new IllegalStateException( "Not implemented" );
+        final Path path = file.toPath();
+        Files.createDirectories( file.toPath().getParent() );
+        Files.write( path, content );
+        return FileInfo.create( file ).content( content ).build();
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\
